@@ -9,8 +9,8 @@ type Thought = {
 
 export function OneThought({thought} : {thought : Thought}) {
     return(
-        <div className="border">
-            <p>{thought.content}</p>
+        <div className="border rounded p-2">
+            <p className="font-roboto">{thought.content}</p>
             <small>{thought.timestamp}</small>
         </div>
     )
