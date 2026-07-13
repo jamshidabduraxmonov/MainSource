@@ -1,32 +1,106 @@
-# React + TypeScript + Vite
+# Thoughts — Personal Portfolio Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A personal portfolio application built to showcase my work, ideas, and learning journey through a dedicated "Thoughts" feed.
 
-Currently, two official plugins are available:
+The goal of this project is to create more than a traditional portfolio. Instead of only displaying finished projects, this platform acts as a living space where I can publish short thoughts, observations, and technical notes while building a public record of my growth as a developer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+* Personal thoughts feed
+* Real-time data synchronization with Firebase Firestore
+* Admin-only posting workflow
+* Responsive UI
+* Dark-themed design
+* Type-safe React components
+* Component-based architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the Oxlint configuration
+### Frontend
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+* React
+* TypeScript
+* Tailwind CSS
+* Vite
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Backend / Services
+
+* Firebase Firestore
+* Firebase Authentication (planned)
+
+## Project Structure
+
+The application follows a component-based React architecture:
+
+* Reusable UI components
+* Typed data models
+* Firebase integration layer
+* Separation between UI logic and data handling
+
+## Data Flow
+
+The current data flow:
+
+```
+User Input
+    ↓
+React State
+    ↓
+Firebase Firestore
+    ↓
+Real-time Listener
+    ↓
+React Components
+    ↓
+Displayed Thoughts
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Firestore provides real-time updates, allowing new thoughts to appear without manually refreshing the page.
+
+## Purpose
+
+This project serves two purposes:
+
+1. A personal portfolio that represents my skills and projects.
+2. A practical learning environment where I continue improving in modern frontend development, TypeScript, databases, and application architecture.
+
+Rather than building isolated tutorials, this project is designed as a real application that evolves over time.
+
+## Future Improvements
+
+Planned features:
+
+* Authentication for private posting
+* Better content management
+* Thought categories/tags
+* Search functionality
+* Improved animations and interactions
+* Additional portfolio sections
+* More advanced backend features
+
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+## Status
+
+🚧 Active development
+
+This project is continuously evolving as new features, improvements, and ideas are added.
+
