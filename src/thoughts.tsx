@@ -41,7 +41,10 @@ export default function DisplayThoughts(){
         const collectionRef = collection(db, 'thoughts');
         const docRef = await addDoc(collectionRef, finalData);
         console.log(docRef);
+        setContent('');
     }
+
+
 
     useEffect(() => 
         {const unsub = onSnapshot(collection(db, 'thoughts'), (querySnapshot)=> {
@@ -56,7 +59,11 @@ export default function DisplayThoughts(){
         });
 
         setThoughtData(temp);
-    })
+
+        return()=> {
+            unsub();
+        }
+    });
 
 }, [db]
     );
@@ -66,7 +73,7 @@ export default function DisplayThoughts(){
     console.log("thoughtData: ", thoughtData);
 
     return(
-        <div className="bg-zinc-950 text-white">
+        <div className="bg-zinc-950 text-white ">
             <div className="flex flex-col gap-4 p-4 w-[50%] m-auto">
             {
                thoughtData.map((thought)=> {
