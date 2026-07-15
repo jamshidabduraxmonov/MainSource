@@ -1,7 +1,7 @@
 
 import {db} from './firebase.ts'
 import {useState, useEffect} from 'react'
-import {serverTimestamp, addDoc, collection, onSnapshot} from 'firebase/firestore'
+import {serverTimestamp, addDoc, collection, onSnapshot, doc, deleteDoc} from 'firebase/firestore'
 
 
 type Thought = {
@@ -11,11 +11,17 @@ type Thought = {
 };
 
 
-export function OneThought({thought} : {thought : Thought}) {
+type ThoughtCardProps = {
+    thought: Thought,
+    deleteThought: (id: string) => Promise<void>
+}
+
+export function OneThought({thought, deleteThought} : ThoughtCardProps) {
    return(
     <div className="border border-white rounded p-2">
         <p className="font-roboto text-white">{thought.content}</p>
         <small>{thought.timestamp.toLocaleString()}</small>
+        <button className="border" onClick={() => deleteThought(thought.id)}>Delete</button>
     </div>
    )
 }
@@ -68,6 +74,11 @@ export default function DisplayThoughts(){
 }, [db]
     );
 
+    const deleteThought = async(id: string)=> {
+        await deleteDoc(doc(db, "thoughts", id));
+        console.log(`${id} is deleted`);
+    }
+
     
 
     console.log("thoughtData: ", thoughtData);
@@ -77,7 +88,7 @@ export default function DisplayThoughts(){
             <div className="flex flex-col gap-4 p-4 w-[50%] m-auto">
             {
                thoughtData.map((thought)=> {
-                return(<OneThought thought={thought}/>);
+                return(<OneThought thought={thought} deleteThought={deleteThought}/>);
                })
             }
             </div>
