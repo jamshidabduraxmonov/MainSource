@@ -40,8 +40,8 @@ export function OneThought({thought, deleteThought, editThought} : ThoughtCardPr
         <div className="">
             <p contentEditable={`${editable}`} onBlur={handleBlur} suppressContentEditableWarning={true} className={`font-roboto text-white ${editable ? "border" : ""} p-2`}>{thought.content}</p>
             <small>{thought.timestamp.toLocaleString()}</small>
-            <button className="border" onClick={() => deleteThought(thought.id)}>Delete</button>
-            <button className="border" onClick={()=> editOn()}>Edit</button>
+            <button className="border m-1" onClick={() => deleteThought(thought.id)}>Delete</button>
+            <button className="border m-1" onClick={()=> editOn()}>Edit</button>
         </div>
 
     </div>
@@ -57,7 +57,7 @@ export default function DisplayThoughts(){
     const [thoughtData, setThoughtData] = useState<Thought[]>([]);
 
     const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(event.target.value);
+        setContent(event.target.value.trim());
     };
 
     const finalData = {
@@ -65,10 +65,14 @@ export default function DisplayThoughts(){
         timestamp: serverTimestamp()
     }
 
+    
+
     const handlePost = async()=> {
         const collectionRef = collection(db, 'thoughts');
-        const docRef = await addDoc(collectionRef, finalData);
-        console.log(docRef);
+        if(content !== ''){
+            const docRef = await addDoc(collectionRef, finalData);
+            console.log(docRef);
+        }
         setContent('');
     }
 
@@ -109,7 +113,15 @@ export default function DisplayThoughts(){
         });
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>)=> {
+        if (event.key === "Enter" && !event.shiftKey){
+            event.preventDefault();
+            handlePost();
+        }
+    }
+
     console.log("thoughtData: ", thoughtData);
+    console.log("content data: ", content);
 
     return(
         <div className="bg-zinc-950 text-white h-screen flex flex-col">
@@ -129,6 +141,7 @@ export default function DisplayThoughts(){
                 value={content}
                 onChange={handleInput}
                 placeholder="Any thoughts?......"
+                onKeyDown={handleKeyDown}
                 />
                 <button onClick={()=> handlePost()} className="border px-4 rounded">Post</button>
             </div>
