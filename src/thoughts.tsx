@@ -18,7 +18,7 @@ type ThoughtCardProps = {
 
 export function OneThought({thought, deleteThought} : ThoughtCardProps) {
    return(
-    <div className="border border-white rounded p-2">
+    <div className="border border-white rounded p-2 my-4">
         <p className="font-roboto text-white">{thought.content}</p>
         <small>{thought.timestamp.toLocaleString()}</small>
         <button className="border" onClick={() => deleteThought(thought.id)}>Delete</button>
@@ -84,8 +84,8 @@ export default function DisplayThoughts(){
     console.log("thoughtData: ", thoughtData);
 
     return(
-        <div className="bg-zinc-950 text-white ">
-            <div className="flex flex-col gap-4 p-4 w-[50%] m-auto">
+        <div className="bg-zinc-950 text-white h-screen flex flex-col">
+            <div className="flex-1 p-4 lg:w-[40%] w-[70%] md:w-[50%] m-auto overflow-y-auto scrollbar-thin [scrollbar-color:theme(colors.slate.700)_transparent]">
             {
                thoughtData.map((thought)=> {
                 return(<OneThought thought={thought} deleteThought={deleteThought}/>);
