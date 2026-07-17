@@ -37,7 +37,7 @@ export function OneThought({thought, deleteThought, editThought} : ThoughtCardPr
 
    return(
     <div className=" rounded p-2">
-        <div className="">
+        <div className="" >
             <p contentEditable={`${editable}`} onBlur={handleBlur} suppressContentEditableWarning={true} className={`font-roboto text-white ${editable ? "border" : ""} p-2`}>{thought.content}</p>
             <small>{thought.timestamp.toLocaleString()}</small>
             <button className="border m-1" onClick={() => deleteThought(thought.id)}>Delete</button>
@@ -133,7 +133,7 @@ export default function DisplayThoughts(){
             <div className="flex-1 divide-y p-4 lg:w-[40%] w-[70%] md:w-[50%] m-auto overflow-y-auto scrollbar-thin [scrollbar-color:theme(colors.slate.700)_transparent]">
                     {
                         thoughtData.map((thought)=> {
-                            return(<OneThought thought={thought} deleteThought={deleteThought} editThought={editThought}/>);
+                            return(<OneThought thought={thought} key={thought.id} deleteThought={deleteThought} editThought={editThought}/>);
                         })
                     }
             </div>
