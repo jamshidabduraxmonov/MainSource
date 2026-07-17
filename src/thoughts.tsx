@@ -52,33 +52,31 @@ export function OneThought({thought, deleteThought, editThought} : ThoughtCardPr
 
 
 export default function DisplayThoughts(){
-
-    const [content, setContent] = useState('');
+    const [rawContent, setRawContent] = useState('');
     const [thoughtData, setThoughtData] = useState<Thought[]>([]);
+    let content = '';
 
     const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(event.target.value);
+        setRawContent(event.target.value);
     };
 
-   
 
     
 
     const handlePost = async()=> {
         const collectionRef = collection(db, 'thoughts');
-        let temp = content.trim();
-        
 
+        content = rawContent.trim()
         const finalData = {
-        temp,
+        content,
         timestamp: serverTimestamp()
     }
 
-        if(temp !== ''){
+        if(content !== ''){
             const docRef = await addDoc(collectionRef, finalData);
             console.log(docRef);
         }
-        setContent('');
+        setRawContent('');
     }
 
 
@@ -145,7 +143,7 @@ export default function DisplayThoughts(){
                 <textarea 
                 className="text-white bg-zinc-800 border rounded m-auto w-[80%] p-2"
                 id="comments"
-                value={content}
+                value={rawContent}
                 onChange={handleInput}
                 placeholder="Any thoughts?......"
                 onKeyDown={handleKeyDown}
