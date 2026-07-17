@@ -57,19 +57,24 @@ export default function DisplayThoughts(){
     const [thoughtData, setThoughtData] = useState<Thought[]>([]);
 
     const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(event.target.value.trim());
+        setContent(event.target.value);
     };
 
-    const finalData = {
-        content,
-        timestamp: serverTimestamp()
-    }
+   
 
     
 
     const handlePost = async()=> {
         const collectionRef = collection(db, 'thoughts');
-        if(content !== ''){
+        let temp = content.trim();
+        
+
+        const finalData = {
+        temp,
+        timestamp: serverTimestamp()
+    }
+
+        if(temp !== ''){
             const docRef = await addDoc(collectionRef, finalData);
             console.log(docRef);
         }
@@ -92,10 +97,11 @@ export default function DisplayThoughts(){
 
         setThoughtData(temp);
 
-        return()=> {
+    });
+
+     return()=> {
             unsub();
         }
-    });
 
 }, [db]
     );
@@ -114,6 +120,7 @@ export default function DisplayThoughts(){
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>)=> {
+        console.log("Key pressed: ", event.key);
         if (event.key === "Enter" && !event.shiftKey){
             event.preventDefault();
             handlePost();
